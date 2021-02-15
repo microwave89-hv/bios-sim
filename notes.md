@@ -1,5 +1,5 @@
 # Prepare Unicorn
-1. Download Unicorn 1.0.2 Tag src
+1. Download Unicorn (1.0.2 Tag) src
 2. (Optional) Tailor to x86 only, see COMPILE.NIX
 3. Make and install as described in the COMPILE.NIX
 4. Run the sample tests (not unit tests) to make sure the installation is fine
