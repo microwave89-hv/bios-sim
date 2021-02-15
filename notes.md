@@ -11,4 +11,4 @@
 6. Make and install as described in the COMPILE.NIX
 
 # Handy to know
-* Unicorn "core" func: *disas_insn()*
+* (x86) Unicorn "core" func: *disas_insn()*
