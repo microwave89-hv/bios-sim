@@ -61,14 +61,28 @@ try:
     cs_base = CS_BASE_INIT
     MAX_INS_LEN = 15
     
+    REAL_MODE = 0
+    PROTECTED_MODE = 1
+    LONG_MODE = 2
+    
+    cpu_mode = REAL_MODE
+    
     while True:
         cs_sel = mu.reg_read(UC_X86_REG_CS)
         eip = mu.reg_read(UC_X86_REG_EIP)
         cs_full = cs_base + cs_sel
-        total_eip = (cs_full * 0x10 & 0xffffffff) + eip
+        if eip == 0xfffffa10:
+            cpu_mode = PROTECTED_MODE
+            
+        if cpu_mode == REAL_MODE:
+            total_eip = (cs_full * 0x10 & 0xffffffff) + eip # only 16 bit addressing mode!
+            cs.mode = capstone.CS_MODE_16
+        else:
+            total_eip = eip
+            cs.mode = capstone.CS_MODE_32
         
         b = {}
-        print("Attempt read mem 0x%08x" % (total_eip))
+        print("Attempt read mem 0x%08x (raw eip = 0x%08x)" % (total_eip, eip))
         curr_code = mu.mem_read(total_eip, MAX_INS_LEN)
         ins = cs.disasm(curr_code, total_eip, 1)
         mnemonic = {}
