@@ -140,7 +140,7 @@ Bios_entry_0xfffffb10_protected32:
 loc_fffffb9c:                           ;Start parsing the next update package header.
 	mov ebx, DWORD PTR [edi+0xc]        ;0xfffffb9c: 8b 5f 0c               (Read processor signature from update header. (Why can we access what looks like RAM before configuring it, or writing to our cache? Because all accesses >= 0xffc00000 go straight away to high ffc00000-mapped 4 MiB BIOS flash!))
 	cmp eax, ebx                        ;0xfffffb9f: 3b c3                  (Compare required processor signature with signature read by cpuid (0x1), if not equal, this particular update package cannot be applied.)
-	; Update 2021: When simulating with modified unicorn engine it can be seen that the core2duo (extended model, family, model, stepping) = (0, 6, f, b)
+	; Update 2021: When simulating with modified unicorn engine it can be seen that core2duo (extended model, family, model, stepping) = (0, 6, f, b).
 	; However the update packages expect (1, 6, 7, 4), or (1, 6, 7, 6), or (1, 6, 7, a), which can be calculated back to the
 	; DisplayFamily_DisplayModel (note how the stepping vanishes) "6_17", that is the "Intel Xeon Processor 3100, 3300, 5200, 5400 series, Intel Core 2 Quad processors 8000, 9000 series", according to the 326019-044US SDM.
 	; Consequently, none of the contained ucode updates are applicable to an Intel (R) Core 2 Duo processor.
